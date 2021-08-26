@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission to Mars</title>
+    <link 
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+
+    <style>
+        .btn{
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+        .btn:hover {background-color: #3E8E41}
+
+        .btn.active {
+            background-color: #3E8E41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <!--Jumbotron-->
+        <div class="jumbotron text-center">
+          <h1>Mission to Mars</h1>
+          <!--Button to activate scraping script-->
+          <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
+        </div>
+        <!--Mars News-->
+        <div class="row" id="mars-news">
+          <div class="col-xs-3">
+            <div class="media">
+              <div class="media-body">
+                <h2>Latest Mars News</h2>
+                <h4 class="media-heading">{{ mars.news_title }}</h4>
+                <p>{{ mars.news_paragraph }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Featured Image and Facts table-->
+        <div class="row" id="mars-featured-image">
+          <div class="col-xs-3"></div>
+            <h2>Featured Mars Image</h2>
+            <img
+              src="{{mars.featured_image }}"
+              class="img-responsive"
+              alt="Responsive image"
+            />
+          </div>
+          <div class="col-xs-3"></div>
+            <!--Mars Facts-->
+            <div class="row" id="mars-facts">
+              <h4>Mars Facts</h4>
+              {{ mars.facts | safe }}  
+            </div>
+          </div>
+        </div>
+        <!--Mars Hemispheres-->
+        <ul class="list-group row" id = 'mars-hemispheres'> 
+          {%for i in mars.scrape_data%}
+            <li class="list-group-item col-xs-3">{{i['image_title']}}
+                <img class="img-responsive" src = '{{i["image_url"]}} '>
+            </li>
+          {% endfor %}
+        </ul>
+</body>
+</html>
